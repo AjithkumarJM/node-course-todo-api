@@ -39,6 +39,7 @@ MongoClient.connect('mongodb://localhost:27017/TodoApp', { useNewUrlParser: true
     //     // console.log(JSON.stringify(result.ops, undefined, 2))
     //     console.log(JSON.stringify(result.ops[0]._id.getTimestamp()));
     // })
+    
     client.close();
 
 }); 
