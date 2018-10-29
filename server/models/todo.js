@@ -29,7 +29,6 @@ var Todo = mongoose.model('Todo',
 //     console.log('Unable to save Todo');
 // })
 
-
 module.exports = {
     Todo
 }
