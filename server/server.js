@@ -1,5 +1,6 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+var { ObjectId } = require('mongodb');
 
 const { mongoose } = require('./db/moongose');
 const { Todo } = require('./models/todo');
@@ -22,7 +23,6 @@ app.post('/todos', (req, res) => {
     });
 });
 
-
 app.get('/todos', (req, res) => {
     Todo.find().then((todos) => {
         res.send({
@@ -35,6 +35,35 @@ app.get('/todos', (req, res) => {
         }
     })
 });
+
+app.get('/todos/:id', (req, res) => {
+    var id = req.params.id;
+    // res.send(req.params);
+    if (!ObjectId.isValid(id)) {
+        return res.status(400).send({
+            message: 'Id is invalid'
+        });
+    }
+
+    Todo.findById(id).then((todo) => {
+        if (!todo) {
+            return res.status(400).send({                
+                message: `no todo find on this id ${id}`,
+            });
+        }
+
+        res.send({
+            todo,
+            status: 200
+        })
+    }).catch((e) => {
+        if (e) {
+            res.status(400).send({
+                message: `no todo find on this id ${id}`,
+            });
+        }
+    })
+})
 
 app.listen(3000, () => {
     console.log('Server started at 3000');
