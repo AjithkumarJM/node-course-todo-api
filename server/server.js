@@ -6,6 +6,7 @@ const { mongoose } = require('./db/moongose');
 const { Todo } = require('./models/todo');
 const { User } = require('./models/user');
 
+const port = process.env.PORT || 3000;
 var app = express();
 
 app.use(bodyParser.json());
@@ -47,7 +48,7 @@ app.get('/todos/:id', (req, res) => {
 
     Todo.findById(id).then((todo) => {
         if (!todo) {
-            return res.status(400).send({                
+            return res.status(400).send({
                 message: `no todo find on this id ${id}`,
             });
         }
@@ -65,8 +66,8 @@ app.get('/todos/:id', (req, res) => {
     })
 })
 
-app.listen(3000, () => {
-    console.log('Server started at 3000');
+app.listen(port, () => {
+    console.log(`server started at ${port}`);
 });
 
 module.exports = {
